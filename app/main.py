@@ -10,4 +10,4 @@ app.register_blueprint(intent_blueprint, url_prefix="/intents")
 app.register_blueprint(rag_blueprint, url_prefix="/rag")
 
 if __name__ == "__main__":
-    run(host="0.0.0.0", port=8080, debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)

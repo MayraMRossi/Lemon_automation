@@ -15,7 +15,7 @@ class EmailService:
         for email in emails:
             category = self.classifier.classify(email.body)
             summary = self.summarizer.summarize(email.body)
-            cvu = self.extract_cvu(email.body) if category == "Banking" else None
+            cvu = self.extract_cvu(email.body) if category == "Consultas de Banking" else None
 
             results.append(
                 EmailOutput(

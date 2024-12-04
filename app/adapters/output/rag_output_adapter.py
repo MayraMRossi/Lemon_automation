@@ -1,4 +1,5 @@
 import json
+from typing import List
 from domain.models.rag_model import RAGQueryOutput
 
 class RAGOutputAdapter:

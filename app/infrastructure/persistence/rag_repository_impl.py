@@ -1,3 +1,4 @@
+from typing import List
 from domain.repositories.rag_repository import RAGRepository
 from domain.models.rag_model import RAGQueryOutput
 from infrastructure.persistence.db_connection import SessionLocal
