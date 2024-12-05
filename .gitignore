@@ -2,3 +2,6 @@
 venv
 .idea
 app\data\vector_store
+
+/app/data/vector_store/
+/app/data/processed_emails.csv

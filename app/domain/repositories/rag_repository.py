@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import List, Dict
-from domain.models.rag_model import RAGQueryInput, RAGQueryOutput
+from typing import List
+from domain.models.rag_model import RAGQueryOutput
 
 class RAGRepository(ABC):
     @abstractmethod
