@@ -3,13 +3,13 @@ from domain.services.email_service import EmailService
 from adapters.input.email_input_adapter import EmailInputAdapter
 from adapters.output.email_output_adapter import EmailOutputAdapter
 from infrastructure.persistence.email_repository_impl import SQLAlchemyEmailRepository
-from infrastructure.nlp.classifier import Classifier
+from infrastructure.nlp.llm_classifier import LlmClassifier
 from infrastructure.nlp.summarizer import Summarizer
 
 email_blueprint = Blueprint("email", __name__)
 email_service = EmailService(
     repository=SQLAlchemyEmailRepository(),
-    classifier=Classifier(),
+    classifier=LlmClassifier(),
     summarizer=Summarizer()
 )
 

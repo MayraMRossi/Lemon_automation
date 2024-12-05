@@ -1,7 +1,7 @@
 import unittest
 from app.domain.services.email_service import EmailService
 from app.domain.models.email_model import EmailInput, EmailOutput
-from app.infrastructure.nlp.classifier import Classifier
+from app.infrastructure.nlp.llm_classifier import Classifier
 from app.infrastructure.nlp.summarizer import Summarizer
 
 class TestEmailService(unittest.TestCase):

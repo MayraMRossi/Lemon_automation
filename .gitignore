@@ -1,3 +1,4 @@
 .env
-.venv
+venv
 .idea
+app\data\vector_store

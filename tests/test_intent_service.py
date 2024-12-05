@@ -1,23 +1,14 @@
 import unittest
-from app.domain.services.intent_service import IntentService
-from app.domain.models.intent_model import IntentInput, IntentOutput
-from app.infrastructure.nlp.classifier import Classifier
+from domain.services.intent_service import IntentService
 
 class TestIntentService(unittest.TestCase):
     def setUp(self):
-        self.service = IntentService(
-            repository=MockIntentRepository(),
-            classifier=Classifier()
-        )
+        self.service = IntentService()
 
-    def test_classify_intent(self):
-        intent = IntentInput(question="How to withdraw crypto?")
-        result = self.service.classify_intent(intent)
-        self.assertEqual(result.intent, "Crypto")
-
-class MockIntentRepository:
-    def save_intents(self, intents):
-        pass
+    def test_classify_question(self):
+        question = "¿Cómo retiro mis fondos en criptomonedas?"
+        category = self.service.classify_question(question)
+        self.assertEqual(category, "Retiros Crypto")
 
 if __name__ == "__main__":
     unittest.main()

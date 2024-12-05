@@ -11,3 +11,10 @@ psycopg2-binary
 requests
 langchain-ollama
 langchain
+scikit-learn
+joblib
+chromadb
+requests
+beautifulsoup4
+python-slugify
+sentence-transformers

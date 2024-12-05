@@ -5,7 +5,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 class Summarizer:
     def summarize(self, message: str) -> str:
-
+        print("Summarizing")
         prompt = PromptTemplate(
             template=f"""
             Summarize the following message in a concise manner, ensuring the summary is no longer than 150 words.
@@ -29,6 +29,7 @@ class Summarizer:
                 rag_chain = prompt | llm | StrOutputParser()
                 answer = rag_chain.invoke({"message": message})
                 length = len(answer.split())
+                print(length)
                 times -= 1
             if length <= 150:
                 return answer.replace('"', "")
@@ -36,3 +37,6 @@ class Summarizer:
         except Exception as e:
             print(f"Error: {e}")
             return f"Error: {e}"
+
+        # TODO: revisar los fallos
+
