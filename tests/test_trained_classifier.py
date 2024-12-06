@@ -44,5 +44,6 @@ class TestTrainedClassifier(unittest.TestCase):
             TrainedClassifier(model_path='dummy_path', vectorizer_path='dummy_path')
         print("Model loading error test passed.")
 
+
 if __name__ == "__main__":
     unittest.main()
