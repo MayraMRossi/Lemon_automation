@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -5,46 +6,38 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import classification_report, accuracy_score
 import joblib
 
-# Paths de los archivos
-INTENTS_CSV_PATH = 'data/intents.csv'
-MODEL_PATH = 'app/models/intent_classifier.pkl'
-VECTORIZER_PATH = 'app/models/tfidf_vectorizer.pkl'
+# File paths
+root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+INTENTS_CSV_PATH = f'{root_path}\\app\\data\\intents.csv'
+MODEL_PATH = f'{root_path}\\app\\models\\intent_classifier.pkl'
+VECTORIZER_PATH = f'{root_path}\\app\\models\\tfidf_vectorizer.pkl'
 
-# 1. Cargar el dataset desde el archivo CSV
+# Create the directory if it doesn't exist
+model_dir = os.path.dirname(MODEL_PATH)
+if not os.path.exists(model_dir):
+    os.makedirs(model_dir)
+
+# 1. Load the dataset from the CSV file
 df = pd.read_csv(INTENTS_CSV_PATH)
 
-# 2. Preprocesamiento de Texto
-# Crear el vectorizador TF-IDF
+# 2. Text Preprocessing
 vectorizer = TfidfVectorizer()
-
-# Transformar las preguntas en vectores TF-IDF
 X = vectorizer.fit_transform(df['question'])
-
-# Obtener las etiquetas de las categorías
 y = df['category']
 
-# 3. Entrenar el Modelo
-# Dividir el dataset en conjuntos de entrenamiento y prueba
+# 3. Train the Model
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Entrenar un modelo de árboles de decisión
 model = DecisionTreeClassifier()
 model.fit(X_train, y_train)
 
-# 4. Evaluar el Modelo
-# Predecir las categorías para el conjunto de prueba
+# 4. Evaluate the Model
 y_pred = model.predict(X_test)
-
-# Mostrar el reporte de clasificación y la precisión
 print("Classification Report:")
 print(classification_report(y_test, y_pred))
 print("Accuracy:", accuracy_score(y_test, y_pred))
 
-# 5. Guardar el Modelo y el Vectorizador
-# Guardar el modelo entrenado
+# 5. Save the Model and the Vectorizer
 joblib.dump(model, MODEL_PATH)
-
-# Guardar el vectorizador TF-IDF
 joblib.dump(vectorizer, VECTORIZER_PATH)
 
-print(f"Modelo y vectorizador guardados en {MODEL_PATH} y {VECTORIZER_PATH} respectivamente.")
+print(f"Model and vectorizer saved to {MODEL_PATH} and {VECTORIZER_PATH} respectively.")

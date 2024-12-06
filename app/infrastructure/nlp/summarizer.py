@@ -1,24 +1,28 @@
 from langchain_ollama import ChatOllama
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-
+from utils.exceptions import SummarizationError
+from utils.prompts import SUMMARIZATION_PROMPT
 
 class Summarizer:
+    """Summarizes messages using a language model."""
+
     def summarize(self, message: str) -> str:
-        print("Summarizing")
-        prompt = PromptTemplate(
-            template=f"""
-            Summarize the following message in a concise manner, ensuring the summary is no longer than 150 words.
-            Focus on capturing the key points, omitting unnecessary details.
+        """
+        Summarizes the given message in a concise manner.
 
-            Message: "{message}"
+        Args:
+            message (str): The message to summarize.
 
-            Your response should contain only the summarized version of the message, strictly within the 150-word limit. Do not add any extra text, explanations, or greetings.
-            """,
-            input_variables=["message"]
-        )
-
+        Returns:
+            str: The summarized message.
+        """
         try:
+            prompt = PromptTemplate(
+                template=SUMMARIZATION_PROMPT,
+                input_variables=["message"]
+            )
+
             llm = ChatOllama(
                 model="llama3.2",
                 temperature=0
@@ -35,8 +39,4 @@ class Summarizer:
                 return answer.replace('"', "")
             return "Error: The summary exceeded the 150-character limit after multiple attempts."
         except Exception as e:
-            print(f"Error: {e}")
-            return f"Error: {e}"
-
-        # TODO: revisar los fallos
-
+            raise SummarizationError(f"Error summarizing message: {str(e)}")
